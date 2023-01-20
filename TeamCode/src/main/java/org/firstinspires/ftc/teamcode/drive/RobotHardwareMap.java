@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -16,10 +17,11 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 //For keeping all and everything connected to the robot in one place
 public class RobotHardwareMap
 {
-    public DcMotorEx leftFront, leftRear, rightRear, rightFront;
-    public DcMotorEx lift;
+    public DcMotorEx motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight;
+    public DcMotorEx motorLift1, motorLift2;
     public Servo servoX, servoY;
-    public com.qualcomm.robotcore.hardware.DistanceSensor navDistanceSensor;
+    public Servo servoClaw;
+    public DistanceSensor navDistanceSensor;
     //public static ColorSensor ColorSensor;
     //TODO: add distance sensor
     //TODO: consider making them static
@@ -42,18 +44,26 @@ public class RobotHardwareMap
 
     public RobotHardwareMap()
     {
-        leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class,"leftRear");
-        rightFront = hardwareMap.get(DcMotorEx.class,"rightFront");
-        rightRear = hardwareMap.get(DcMotorEx.class,"rightRear");
 
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFrontLeft = hardwareMap.get(DcMotorEx.class,"motorFrontLeft");
+        motorBackLeft = hardwareMap.get(DcMotorEx.class,"motorBackLeft");
+        motorFrontRight = hardwareMap.get(DcMotorEx.class,"motorFrontRight");
+        motorBackRight = hardwareMap.get(DcMotorEx.class,"motorBackRight");
 
-        lift = hardwareMap.get(DcMotorEx.class,"lift");
+        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        servoX = hardwareMap.get(Servo.class,"servoX");
-        servoY = hardwareMap.get(Servo.class,"servoY");
+        motorLift1 = hardwareMap.get(DcMotorEx.class,"lift");
+        motorLift2 = hardwareMap.get(DcMotorEx.class,"lift");
+
+        //Todo
+        //motorLift1.setTargetPosition(DriveConstants.INTAKE_POSITION);
+        motorLift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLift1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLift1.setPower(1);
+
+        //servoX = hardwareMap.get(Servo.class,"servoX");
+        //servoY = hardwareMap.get(Servo.class,"servoY");
 
         navDistanceSensor = hardwareMap.get(DistanceSensor.class, "navDistanceSensor");
     }

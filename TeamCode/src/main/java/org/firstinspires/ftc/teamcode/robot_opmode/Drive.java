@@ -1,17 +1,31 @@
 package org.firstinspires.ftc.teamcode.robot_opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.RobotHardwareMap;
 
 @TeleOp
-public class Drive extends LinearOpMode {
-    @Override
-    public void runOpMode() throws InterruptedException {
+public class Drive extends OpMode
+{
+    private int targetPosition = 0;
+    private int HIGH_POSITION = 4000;
+    private int MEDIUM_POSITION = 2000;
+    private int INTAKE_POSITION = 0;
+
+    double CLAW_OPEN = 0;
+    double CLAW_CLOSED = 0.4;
+    public enum LiftState //what if you don't want to LOOK FOR GAME ELEMENTS, but, for example, want to make the distance servo DANCE? expand it
+    {
+        LOOK_FOR_GAME_ELEMENTS
+    }
+    public void init()
+    {
         // Declare our motors
         // Make sure your ID's match your configuration
 
@@ -19,14 +33,6 @@ public class Drive extends LinearOpMode {
 
         // Reverse the right side motors
         // Reverse left motors if you are using NeveRests
-
-        int targetPosition = 0;
-        int HIGH_POSITION = 4000;
-        int MEDIUM_POSITION = 2000;
-        int INTAKE_POSITION = 0;
-
-        double CLAW_OPEN = 0;
-        double CLAW_CLOSED = 0.4;
 
         DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
@@ -43,6 +49,25 @@ public class Drive extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setPower(1);
         //double a = 0;
+        Servo claw = hardwareMap.get(Servo.class, "clawMotor");
+        //claw.setDirection(Servo.Direction.REVERSE);
+    }
+    public void loop() {
+        /*
+        if (gamepad1.a) {
+            targetPosition = HIGH_POSITION;
+        // Declare our motors
+        // Make sure your ID's match your configuration
+
+        //RobotHardwareMap hM = new RobotHardwareMap();
+
+        // Reverse the right side motors
+        // Reverse left motors if you are using NeveRests
+
+
+
+        //double a = 0;
+
         Servo claw = hardwareMap.get(Servo.class, "clawMotor");
         //claw.setDirection(Servo.Direction.REVERSE);
 
@@ -93,7 +118,7 @@ public class Drive extends LinearOpMode {
 
             /*if(gamepad1.dpad_right) {a+=0.10; sleep(100);};
             if(gamepad1.dpad_left) {a-=0.10; sleep(100);};
-            claw.setPosition(a);*/
+            claw.setPosition(a);
 
             //telemetry.addData("set:", a);
             // toggle for the trigger
@@ -123,6 +148,8 @@ public class Drive extends LinearOpMode {
             //hM.leftRear.setPower(backLeftPower);
             //hM.rightFront.setPower(frontRightPower);
             //hM.rightRear.setPower(backRightPower);
+
         }
+        */
     }
 }
